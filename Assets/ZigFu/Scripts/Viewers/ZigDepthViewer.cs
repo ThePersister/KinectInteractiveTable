@@ -45,8 +45,6 @@ public class ZigDepthViewer : MonoBehaviour {
     Color32[] outputPixels;
     public int MaxDepth = 10000; //DO NOT MODIFY IN RUNTIME!!
 
-    private bool isLimited;
-
 	// Use this for initialization
 	void Start () {
         if (target == null) {
@@ -63,8 +61,6 @@ public class ZigDepthViewer : MonoBehaviour {
         if (null != target) {
             target.material.mainTexture = texture;
         }
-
-        StartCoroutine(LimiterLoop());
 	}
 
     void UpdateHistogram(ZigDepth depth)
@@ -129,7 +125,6 @@ public class ZigDepthViewer : MonoBehaviour {
     {
         if (UseHistogram) {
             UpdateHistogram(ZigInput.Depth);
-            UpdateAverageAndLowestDepth();
         }
         else {
             //TODO: don't repeat this every frame
@@ -144,39 +139,6 @@ public class ZigDepthViewer : MonoBehaviour {
             }
         }
         UpdateTexture(ZigInput.Depth);
-    }
-
-    void UpdateAverageAndLowestDepth()
-    {
-        if (isLimited) return;
-        else { isLimited = true; }
-
-        float average = 0;
-        float lowest = Mathf.Infinity;
-        int lowestIndex = 0;
-        float total = 0;
-        float current = 0;
-
-        for (int i = 0; i < depthHistogramMap.Length; i++)
-        {
-            current = depthHistogramMap[i];
-            total += current;
-            if (current < lowest && current > 500)
-            {
-                lowest = current;
-                lowestIndex = i;
-            }
-        }
-
-        average = total / depthHistogramMap.Length;
-        DepthHandler.Instance.UpdateLowestDepthAndAverage(average, lowest, lowestIndex);
-    }
-
-    private IEnumerator LimiterLoop()
-    {
-        isLimited = false;
-        yield return new WaitForEndOfFrame();
-        StartCoroutine(LimiterLoop());
     }
 
     void OnGUI() {
