@@ -22,6 +22,6 @@ public class SpawnModels : MonoBehaviour {
 
     private GameObject GetRandomModel()
     {
-        return Models[Mathf.RoundToInt(Random.value * Models.Count)];
+        return Models[Mathf.RoundToInt(Random.value * (Models.Count -1))];
     }
 }
