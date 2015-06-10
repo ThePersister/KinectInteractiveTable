@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class SpawnModels : MonoBehaviour {
 
+    public float SpawnDelay = 1f;
     public Vector3 OffsetRange = new Vector3(0, 5, 0);
     public List<GameObject> Models = new List<GameObject>();
 
@@ -14,7 +15,7 @@ public class SpawnModels : MonoBehaviour {
 
     private IEnumerator SpawnModelCycle()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(SpawnDelay);
         GameObject ball = (GameObject)Instantiate(GetRandomModel(), transform.position + Vector3.Lerp(-OffsetRange, OffsetRange, Random.value), transform.rotation);
         ball.transform.parent = transform;
         StartCoroutine(SpawnModelCycle());
