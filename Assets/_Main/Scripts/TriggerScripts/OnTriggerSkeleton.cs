@@ -14,7 +14,7 @@ public class OnTriggerSkeleton : MonoBehaviour
         else
         {
             if(other.transform.parent.GetComponent<IFlyable>())
-                other.transform.parent.GetComponent<IFlyable>().ThrowMe((other.transform.position - transform.position).normalized, 1f);
+                other.transform.parent.GetComponent<IFlyable>().ThrowMe((other.transform.position - transform.position).normalized, 2f);
         }
     }
 }
