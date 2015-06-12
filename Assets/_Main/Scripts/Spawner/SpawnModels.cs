@@ -16,8 +16,8 @@ public class SpawnModels : MonoBehaviour {
     private IEnumerator SpawnModelCycle()
     {
         yield return new WaitForSeconds(SpawnDelay);
-        GameObject ball = (GameObject)Instantiate(GetRandomModel(), transform.position + Vector3.Lerp(-OffsetRange, OffsetRange, Random.value), transform.rotation);
-        ball.transform.parent = transform;
+        GameObject enemy = (GameObject)Instantiate(GetRandomModel(), transform.position + Vector3.Lerp(-OffsetRange, OffsetRange, Random.value), transform.rotation);
+        enemy.transform.parent = transform;
         StartCoroutine(SpawnModelCycle());
     }
 

@@ -30,7 +30,6 @@ public class SoundHandler : Singleton<SoundHandler> {
     private AudioClip GetRandomScream()
     {
         int test = Mathf.RoundToInt(Random.value * (ScreamSoundclips.Count - 1));
-        Debug.Log(test);
         return ScreamSoundclips[test];
     }
 }

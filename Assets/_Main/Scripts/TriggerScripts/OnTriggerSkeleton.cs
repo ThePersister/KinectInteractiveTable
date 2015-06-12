@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 
 public class OnTriggerSkeleton : MonoBehaviour
@@ -9,12 +10,11 @@ public class OnTriggerSkeleton : MonoBehaviour
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Squash"))
         {
-            other.GetComponentInChildren<ISquashable>().SquashMe();
+            other.SendMessage("SquashMe", SendMessageOptions.RequireReceiver);
         }
         else
         {
-            if(other.transform.parent.GetComponent<IFlyable>())
-                other.transform.parent.GetComponent<IFlyable>().ThrowMe((other.transform.position - transform.position).normalized, 2f);
+            other.transform.SendMessageUpwards("ThrowMe", (other.transform.position - transform.position).normalized * 2f, SendMessageOptions.RequireReceiver);
         }
     }
 }

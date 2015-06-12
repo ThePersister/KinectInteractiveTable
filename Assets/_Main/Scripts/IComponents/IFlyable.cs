@@ -3,31 +3,36 @@ using System.Collections;
 
 public class IFlyable : MonoBehaviour {
 
+    public IEnemy EnemyReference;
     private Rigidbody _rigidbody;
-    public ISquashable _squashReference;
-    [HideInInspector] public bool IsFlying;
-   
 
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    //public void ThrowMe(Vector3 dir, float force)
-    //{
-    //    if (_squashReference.IsSquashed || IsFlying) return;
-    //    IsFlying = true;
+    public void ThrowMe(Vector3 force)
+    {
+        // Toggle flag if not done before
+        if (EnemyReference.IsSquashed || EnemyReference.IsFlying) return;
+        EnemyReference.IsFlying = true;
 
-    //    dir = new Vector3(dir.x, Mathf.Abs(dir.y), dir.z);
+        // Deactivate Squash System
+        EnemyReference.SqaushReference.gameObject.SetActive(false);
 
-    //    _squashReference.gameObject.SetActive(false);
-    //    _rigidbody.isKinematic = false;
-    //    _rigidbody.useGravity = true;
-    //    _rigidbody.AddForce(dir.normalized * force, ForceMode.Impulse);
-    //    SoundHandler.Instance.SpawnScreamEffect(transform);
-    //    ScoreHandler.Instance.IncrementScore(2);
-    //    _squashReference.mAnimator.SetTrigger("Fly");
-    //    Invoke("Die", 0.5f);
+        // Calculate direction
+        force = new Vector3(force.x, Mathf.Abs(force.y), force.z);
 
-    //}
+        // Update rigidbody and apply force.
+        _rigidbody.isKinematic = false;
+        _rigidbody.useGravity = true;
+        _rigidbody.AddForce(force, ForceMode.Impulse);
+
+        // Spawn sound effect and increment score.
+        SoundHandler.Instance.SpawnScreamEffect(transform);
+        ScoreHandler.Instance.IncrementScore(2);
+
+        // Set Fly and Death animations.
+        EnemyReference.SetFlyAndDie();
+    }
 }
