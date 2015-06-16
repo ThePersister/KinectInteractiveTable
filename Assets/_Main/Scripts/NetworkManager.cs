@@ -23,7 +23,7 @@ public class NetworkManager : Singleton<NetworkManager> {
         pView.RPC("RM_PlayGame", PhotonTargets.OthersBuffered);
     }
 
-    [RPC]
+    [PunRPC]
     public void RM_PlayGame()
     {
         Debug.Log("Received Message");

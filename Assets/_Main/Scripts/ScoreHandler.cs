@@ -56,4 +56,14 @@ public class ScoreHandler : Singleton<ScoreHandler> {
             StartCoroutine(ScaleDown());
         }
     }
+
+    public void HighlightScore(bool toggleTrue)
+    {
+
+    }
+
+    public void ResetScore()
+    {
+        currentScore = 0;
+    }
 }

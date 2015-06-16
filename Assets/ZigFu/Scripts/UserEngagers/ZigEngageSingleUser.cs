@@ -17,6 +17,14 @@ public class ZigEngageSingleUser : MonoBehaviour {
         ZigInput.Instance.AddListener(gameObject);
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reset();
+        }
+    }
+
 	void EngageUser(ZigTrackedUser user) {
 		if (null == engagedTrackedUser) {
             engagedTrackedUser = user;

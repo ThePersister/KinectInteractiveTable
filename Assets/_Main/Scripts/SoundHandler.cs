@@ -6,7 +6,19 @@ public class SoundHandler : Singleton<SoundHandler> {
 
     public GameObject PFB_SquashSound;
     public GameObject PFB_ScreamSound;
+    public GameObject PFB_Sound;
     public List<AudioClip> ScreamSoundclips = new List<AudioClip>();
+
+    public void SpawnSound(Vector3 targetPos, AudioClip clip)
+    {
+        GameObject newSound = (GameObject)Instantiate(PFB_Sound, targetPos, Quaternion.identity);
+        newSound.transform.parent = this.transform;
+        AudioSource source = newSound.GetComponent<AudioSource>();
+        source.clip = clip;
+        source.Play();
+        Destroy(newSound, source.clip.length);
+    }
+
 
     public void SpawnSquashSound(Vector3 enemyPos)
     {
@@ -24,6 +36,7 @@ public class SoundHandler : Singleton<SoundHandler> {
         newSound.transform.parent = targetParent;
         AudioSource source = newSound.GetComponent<AudioSource>();
         source.clip = GetRandomScream();
+        source.Play();
         Destroy(newSound, source.clip.length);
     }
 
